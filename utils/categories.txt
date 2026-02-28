@@ -1,0 +1,91 @@
+Bellezza & Benessere 025dcc04-511a-48a7-9d54-9c8330ec7fb3
+Comunicazione, PC 0285055c-755c-4008-a5ef-84a8f2e77f0b
+Pedaggio 03e0aa81-0318-46b0-9b63-91d7420e7ef6
+Abbigliamento & Scarpe 043f8b6a-60de-4ec7-bfb7-4c808f738c66
+Automatic bank statements reading 05a4d998-706f-4167-a964-f15a7a4a2767
+Spesa 06b45615-a7d0-4f00-8992-95d6f9907c55
+Drugstore 0e0ae827-900d-466b-b91c-b5af11f6d5c8
+TV & Streaming 11ad0c36-f9cc-4ed7-b82c-601780c46491
+Veicoli 19bff33c-875e-4ce7-bf16-64ff29ebf59c
+Manutenzione veicoli 1c796611-0d25-4611-b143-a827f02e309f
+Risparmi 1fe10154-42a3-42b4-8ec1-b88980ce0346
+Lotterie & Gioco d'azzardo 202089f9-0aa1-4959-9dd9-7e905a2a99a6
+Internet 22abfec7-d7b9-402b-896a-2242142b75fe
+Culture, sport events 2409b680-1dfb-4926-99c8-652a92dc5a6a
+Fuel 26426aa6-55ef-43e2-afef-a0285fd5a424
+Health & beauty 2979979c-6fa4-44f2-8a45-958749697ad0
+Taxes 3179b457-1ad6-4b0a-ae54-005ac04f6055
+Jewels, accessories 32818c0a-5472-4ddf-905c-66ee1f68dee0
+Altro 35794129-8e21-43bb-aba3-e09b53ec53f6
+Trasporti 36d3a3a7-6395-49f8-b23f-fa2ddd5edc11
+Rentals 37813c1a-6909-4678-9e56-680ee1bdc9ca
+Smarrimento 3c7ca941-8ddd-41a4-9fab-59af825f8dff
+Financial investments 43602ea1-d211-4ec2-99d4-76cc838030a1
+Telefono 441f7a25-7962-423e-805c-4c5292036d55
+Commissioni 4a2f0581-b7b2-49ea-8660-095b5d87491d
+Parcheggio 4befadf2-27f2-42b1-bdba-0a911d7b831b
+Entrate 4fc4f54c-6f66-43df-ac7e-539fc69f05ff
+Alcohol, tobacco 51a9ed48-13bf-4a60-b9a1-efa78009f4de
+Taxi 5383eb57-e517-487b-9358-57c1ba2b2e16
+Paghetta 58e7b0c4-56ac-4fe5-bf29-b94454688ab9
+Ripetizioni 61afe20f-fe65-4efa-aefb-4b41eb10a92e
+Manutenzione 62035cd4-838f-418c-a0d9-98e0931bfbb5
+Holiday, trips, hotels 66f877b4-30ca-4920-b78e-14cc36a68e9b
+ 68b6ced6-1c86-4534-8c88-704e0de6519e
+Casa 6d2271c1-ff89-4552-9da3-196626aac7c4
+Prestiti & Interessi 718c18df-f85d-488f-be11-0e44bebc526b
+Interessi 7af26741-a212-47da-a50c-baeb717e9db4
+Animali domestici 7b1ab11c-bee3-4460-9a65-791b77510014
+Eventi 7c7dfaee-3be0-474e-b337-bd8b4e735940
+Services 835e838a-8ce0-4b9f-8ca3-9e628bc77348
+Premi 892593d3-451c-45e5-8518-9c233abd38db
+Home, garden 8a55709c-b88b-443f-9395-be0e0579edfa
+Interest, dividends 8b6a6c2a-f08a-44f5-bc12-60c8ccd268df
+Fines 8f78088b-8d9e-4c76-92b4-9748eff28b9f
+Bonus 91a849fe-db27-4455-beaf-15e9ddf2deb9
+Sconosciuto 926cc8c8-3482-4630-9032-83c6c348fa1a
+Rimborsi calcio 93117202-313b-4c3d-8cb7-45e284024516
+Unknown Income 93d63206-47e9-457f-a59e-d54b44478225
+Sport & Fitness 94ec9c3f-391d-4395-bb93-f2e1924d3e64
+Lotterie & Gioco d'azzardo 979f1b8b-5412-40d9-9e06-a869f5f27ef5
+Rete telefonica fissa 9896e24f-9875-4b94-8dc6-f968c3b5e84c
+Assicurazione immobili 9af92dfc-1dfa-4d83-80b3-ad2447970be2
+Vendite 9d2eb0c2-f0a3-48ac-b9ab-ed11d95e3b3d
+Bar & Locali 9defe17c-1cd4-4460-8ece-96fd90a76690
+Dividends a04096d4-7436-47dd-b6a0-5f545e7eff20
+Shopping a0e0eaa6-9f83-43fd-afd7-59e20d0381ae
+Regali a2cb741c-753d-40e6-bcf4-cc4acc7b36d5
+Life & Entertainment a45fe304-d61c-486e-98b8-7e2f90e0c8ae
+Buoni pasto a5cdc9ef-d31f-4c16-8840-421165b76037
+ a6daf078-746f-4de8-8d53-ddeab5abfe83
+Refund abe4d82d-ea09-43d4-a5e7-e27217842bf3
+Long distance ae0f2975-9b72-4cbb-a810-a1092d7e673e
+Formazione & Sviluppo b00d0301-b0de-4a08-b3c9-d6a3c68dda02
+Spese finanziarie b3cf77b0-3dfb-4182-a82e-43d307287baa
+Vehicle insurance b480c589-a9bd-4d61-bf3f-0551faff8838
+Trasferimento, Prelievo b6a83884-8a6b-4071-a660-e1a36bc28cde
+Trasporto pubblico bbd7c12b-8482-4154-83ec-66ae33d1ad9e
+Postal services bde7d02a-5ef8-4702-9883-4ab23aace98f
+Prestiti & Noleggi bf461213-9334-4189-9960-744b2f9b827f
+Rimborsi c196e895-83d8-4118-b744-94321501287e
+Realty c1c19810-a76b-448c-be98-807361998bc4
+Stipendio c232f841-d12b-491a-b659-8e8e747a0454
+Rent c2d55850-4582-421b-accf-c5db2d8e3d57
+Business trips c8d2dda6-ca86-4ee4-adeb-9c531f4e4d93
+Cancelleria & Utensili caa676db-ae3d-4456-8563-21c3506d309c
+Salute cb9d72f3-2b31-4dfe-ab4a-feafe8bdf3de
+Software, apps, games cd302b21-35ff-407a-ad29-965f33dbab09
+ d259f3dc-0630-4845-ad3b-af4facc22e0d
+Interests and Dividends d3cffaf0-b543-4550-b3c8-1780fdfbf76f
+Regali d69edfb5-81ef-42b5-8908-49db1a17e9a6
+Investments d922ce7f-9379-4078-811a-3b5b502f0e58
+Cibo & Bevande da124eef-0630-48ca-9af6-67c36b96740c
+Leti da3fcf77-52a4-41ca-bba3-bd06493ba159
+Energia & Utenze dc9a2f8e-c233-4027-a612-4913a406ff3f
+ dcd71755-22e5-4f87-baa7-b07ad5cbbcb8
+Unknown Expense e3504ae6-2463-4c18-94e3-7b556f39d534
+Charity, gifts e67d57f4-5a62-4f0b-a465-86e001c62e63
+ ea566b98-446f-40eb-8071-f5289acf6716
+Hobbies f42ffe7e-7710-491c-abf3-fc7b92cef42a
+Books, audio, subscriptions fb90fae9-b395-4e48-9574-aff68dd2d560
+Ristoranti & Fast-food fe2cd110-9275-4f28-92f0-ecb3bfb1663e
