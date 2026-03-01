@@ -31,7 +31,7 @@ def monthly_report(accounts=None, reference_date_str=None):
     if accounts is None and reference_date_str is None:
         args = parse_args()
         accounts = args.accounts
-        reference_date_str = args.reference_date_str
+        reference_date_str = str(args.reference_date)
 
     if not accounts:
         accounts_response = call_wallet_api("v1/api/accounts")
@@ -39,7 +39,7 @@ def monthly_report(accounts=None, reference_date_str=None):
 
     monthly_records = get_records(accounts, reference_date_str=reference_date_str)
     report = make_report(monthly_records)
-    save_report(db_connection=None, report=report, reference_date_str=reference_date_str)
+    save_report(report=report, reference_date_str=reference_date_str)
 
 if __name__ == "__main__":
     monthly_report()

@@ -2,9 +2,12 @@ import datetime
 import requests
 import os
 import time
+import json
 import pandas as pd
 from config.filters import SPESE, INCOME, RIMBORSI, INVESTIMENTI, BUONI_PASTO
+from config.queries import INSERT_MONTHLY_FINANCIAL_UPDATE, SELECT_FUNDS, GET_PREVIOUS_SALDO, INSERT_SALDO
 from dotenv import load_dotenv
+from utils.db_utils import DBUtils
 load_dotenv()
 WALLET_API_TOKEN = os.getenv("WALLET_API_TOKEN")
 
@@ -57,27 +60,78 @@ def make_report(records_df: pd.DataFrame):
                (records_df['amount'] > 0)]
     buoni_pasto_amount = round(buoni_pasto_df.amount.sum(), 2)
 
-    cash_flow = round(income_amount + rimborsi_amount + spese_amount, 2)
+    svincolati = round(income_amount + rimborsi_amount + spese_amount, 2)
 
     report = {
-        "cash_flow_details": {
+        "svincolati_details": {
             "spese": spese_amount,
             "income": income_amount,
             "rimborsi": rimborsi_amount,
         },
         "buoni_pasto": buoni_pasto_amount,
-        "cash_flow": cash_flow,
+        "svincolati": svincolati,
         "investimenti": investimenti_amount
     }
 
     return report
 
-def save_report(db_connection, report: dict, reference_date_str: str):
-    print(report)
-    pass
+def save_report(report: dict, reference_date_str: str):
+    DBUtils.initialize_pool()
+
+    first_day_prev, _ = get_previous_month_range(reference_date_str)
+    # first_day_prev is already in YYYY-MM-01 format from get_previous_month_range
+    ref_month = first_day_prev[:10]
+    
+    # Get fund mappings from the database
+    try:
+        funds_data = DBUtils.execute_query(SELECT_FUNDS)
+        # Create a mapping dictionary. e.g. {'svincolati': '0001', 'investimenti': '0002'}
+        funds_map = {row[1]: row[0] for row in funds_data}
+    except Exception as e:
+        print(f"Error fetching funds: {e}")
+        funds_map = {}
+
+    svincolati_details = {
+        "text": "",
+        "components": {
+            "spese": float(report.get("svincolati_details", {}).get("spese", 0.0)),
+            "income": float(report.get("svincolati_details", {}).get("income", 0.0)),
+            "rimborsi": float(report.get("svincolati_details", {}).get("rimborsi", 0.0))
+        }
+    }
+    
+    # Use the mapping to get the correct fund_id, fallback to hardcoded if not found
+    records = [
+        (ref_month, funds_map.get("svincolati", "0001"), float(report.get("svincolati", 0.0)), json.dumps(svincolati_details)),
+        (ref_month, funds_map.get("investimenti", "0002"), float(report.get("investimenti", 0.0)), None),
+        (ref_month, funds_map.get("buoni_pasto", "0003"), float(report.get("buoni_pasto", 0.0)), None)
+    ]
+    
+    for row in records:
+        print(f"Saving fund {row[1]} for month {row[0]}: {row[2]}")
+        DBUtils.execute_update(INSERT_MONTHLY_FINANCIAL_UPDATE, row)
+        
+    save_saldo(ref_month, float(report.get("svincolati", 0.0)) + float(report.get("investimenti", 0.0)) + float(report.get("buoni_pasto", 0.0)))
+
+    DBUtils.close_pool()
+
+def save_saldo(ref_month: str, monthly_sum: float):
+    # Fetch the previous month's saldo
+    previous_saldo = 0.0
+    try:
+        result = DBUtils.execute_query(GET_PREVIOUS_SALDO, (ref_month,))
+        if result and len(result) > 0 and result[0][0] is not None:
+            previous_saldo = float(result[0][0])
+    except Exception as e:
+        print(f"Error fetching previous saldo: {e}")
+        
+    new_saldo = previous_saldo + monthly_sum
+    try:
+        DBUtils.execute_update(INSERT_SALDO, (ref_month, new_saldo))
+    except Exception as e:
+        print(f"Error saving new saldo: {e}")
 
 def get_records(accounts: dict, reference_date_str: str):
-    
     first_day_of_prev_month, last_day_of_prev_month = get_previous_month_range(reference_date_str)
     print(f"Fetching records from {first_day_of_prev_month} to {last_day_of_prev_month}")
 
@@ -95,7 +149,6 @@ def get_records(accounts: dict, reference_date_str: str):
                     "offset": n_records_retrieved
                 }
             time.sleep(1)
-            print(f"Fetching records for account {account_name} with offset {n_records_retrieved}")
             records = call_wallet_api("v1/api/records", args=args)
 
             if len(records['records']) > 0:

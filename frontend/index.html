@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wallet Dashboard</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-gray-100 text-gray-800 font-sans p-6">
+    <div class="max-w-6xl mx-auto">
+        <h1 class="text-3xl font-bold mb-6 text-gray-900">Monthly Financial Dashboard</h1>
+        
+        <!-- Filter Controls -->
+        <div class="bg-white p-4 rounded-lg shadow mb-6">
+            <h2 class="text-lg font-semibold mb-3">Filters (Applies to Chart 1 & Table)</h2>
+            <div class="flex flex-wrap gap-4 items-end">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Start Month</label>
+                    <input type="month" id="startDate" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2 border">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">End Month</label>
+                    <input type="month" id="endDate" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2 border">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Fund</label>
+                    <select id="fundSelect" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2 border">
+                        <option value="">-- All Funds --</option>
+                    </select>
+                </div>
+                <div>
+                    <button id="applyFilters" class="bg-blue-600 text-white px-4 py-2 rounded shadow hover:bg-blue-700">Apply Filters</button>
+                </div>
+            </div>
+            <div id="selectionInfo" class="mt-4 text-sm text-gray-600 italic"></div>
+        </div>
+
+        <!-- Charts Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+            <!-- Chart 1 -->
+            <div class="bg-white p-4 rounded-lg shadow">
+                <h3 class="text-lg font-semibold mb-2 text-center text-gray-800">Chart 1: Selected Fund Over Time</h3>
+                <canvas id="chart1" width="400" height="250"></canvas>
+            </div>
+            
+            <!-- Chart 2 -->
+            <div class="bg-white p-4 rounded-lg shadow">
+                <h3 class="text-lg font-semibold mb-2 text-center text-gray-800">Chart 2: Monthly Sum & Saldo</h3>
+                <p class="text-xs text-center text-gray-500 mb-2">No selectors apply here</p>
+                <canvas id="chart2" width="400" height="250"></canvas>
+            </div>
+        </div>
+
+        <!-- Table -->
+        <div class="bg-white rounded-lg shadow overflow-hidden">
+            <div class="px-4 py-3 border-b border-gray-200 bg-gray-50">
+                <h3 class="text-lg font-semibold text-gray-800">Filtered Records Table</h3>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ref Month</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fund Name</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount (€)</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Details</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody" class="bg-white divide-y divide-gray-200">
+                        <!-- rows injected via JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let allFunds = [];
+        let chart1Instance = null;
+        let chart2Instance = null;
+
+        // Fetch data on load
+        async function loadData() {
+            try {
+                // Initialize funds
+                const fundsRes = await fetch('/api/funds');
+                allFunds = await fundsRes.json();
+                initFilters();
+
+                // Initialize Chart 2
+                const chart2Res = await fetch('/api/chart2');
+                const chart2Data = await chart2Res.json();
+                renderChart2(chart2Data);
+
+                // Fetch initial dashboard filtered data
+                updateDashboard();
+            } catch (err) {
+                console.error("Error loading data:", err);
+            }
+        }
+
+        function initFilters() {
+            const fundSelect = document.getElementById("fundSelect");
+            allFunds.forEach(f => {
+                const opt = document.createElement("option");
+                opt.value = f.fund_id;
+                opt.textContent = f.fund_name;
+                fundSelect.appendChild(opt);
+            });
+        }
+
+        // Event listener for button
+        document.getElementById('applyFilters').addEventListener('click', updateDashboard);
+
+        async function updateDashboard() {
+            const startVal = document.getElementById('startDate').value; 
+            const endVal = document.getElementById('endDate').value; 
+            const fundId = document.getElementById('fundSelect').value;
+
+            // Update selection info UI
+            const fundName = fundId ? allFunds.find(f => f.fund_id == fundId)?.fund_name : "All Funds";
+            const dateStr = (!startVal && !endVal) ? "Last Month (Default)" :
+                            `${startVal || 'Earliest'} to ${endVal || 'Latest'}`;
+            
+            document.getElementById('selectionInfo').textContent = `Selection: Fund - ${fundName} | Date Range - ${dateStr}`;
+
+            const params = new URLSearchParams();
+            if (startVal) params.append('start_month', startVal);
+            if (endVal) params.append('end_month', endVal);
+            if (fundId) params.append('fund_id', fundId);
+
+            try {
+                const res = await fetch(`/api/filtered_data?${params.toString()}`);
+                const data = await res.json();
+                
+                renderChart1(data.chart1_data, fundName);
+                renderTable(data.table_data);
+            } catch (err) {
+                console.error("Error fetching filtered data:", err);
+            }
+        }
+
+        function renderChart1(chart1Data, fundName) {
+            const ctx = document.getElementById('chart1').getContext('2d');
+            if (chart1Instance) chart1Instance.destroy();
+
+            chart1Instance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: chart1Data.labels,
+                    datasets: [{
+                        label: `Amount (${fundName})`,
+                        data: chart1Data.values,
+                        backgroundColor: 'rgba(54, 162, 235, 0.7)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: { beginAtZero: true }
+                    }
+                }
+            });
+        }
+
+        function renderChart2(chart2Data) {
+            const ctx = document.getElementById('chart2').getContext('2d');
+            if (chart2Instance) chart2Instance.destroy();
+
+            chart2Instance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: chart2Data.labels,
+                    datasets: [
+                        {
+                            type: 'line',
+                            label: 'Saldo',
+                            data: chart2Data.line_data,
+                            borderColor: 'rgba(255, 99, 132, 1)',
+                            borderWidth: 2,
+                            fill: false,
+                            yAxisID: 'yRight'
+                        },
+                        {
+                            type: 'bar',
+                            label: 'Monthly Sum (All Funds)',
+                            data: chart2Data.bar_data,
+                            backgroundColor: 'rgba(75, 192, 192, 0.3)', // transparent bg
+                            borderColor: 'rgba(75, 192, 192, 0.5)',
+                            borderWidth: 1,
+                            yAxisID: 'yLeft'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        yLeft: {
+                            type: 'linear',
+                            position: 'left',
+                            beginAtZero: true
+                        },
+                        yRight: {
+                            type: 'linear',
+                            position: 'right',
+                            beginAtZero: true,
+                            grid: { drawOnChartArea: false }
+                        }
+                    }
+                }
+            });
+        }
+
+        function renderTable(data) {
+            const tbody = document.getElementById('tableBody');
+            tbody.innerHTML = '';
+
+            // Sort data by month descending (backend sent ASC)
+            const sorted = [...data].reverse();
+
+            sorted.forEach(u => {
+                const tr = document.createElement('tr');
+                
+                // Ensure details is a string to safely call .replace
+                let detailsStr = "";
+                if (typeof u.details === 'string') {
+                    detailsStr = u.details;
+                } else if (u.details != null) {
+                    detailsStr = JSON.stringify(u.details);
+                }
+                
+                tr.innerHTML = `
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${u.ref_month}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${u.fund_name || u.fund_id}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 font-medium ${u.amount >= 0 ? 'text-green-600' : 'text-red-600'}">${u.amount.toFixed(2)}</td>
+                    <td class="px-6 py-4 text-sm text-gray-500 max-w-xs truncate" title='${detailsStr.replace(/'/g, "&#39;")}'>${detailsStr}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // Initialize
+        window.onload = loadData;
+    </script>
+</body>
+</html>

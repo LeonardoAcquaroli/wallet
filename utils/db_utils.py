@@ -1,0 +1,157 @@
+import psycopg2
+from psycopg2 import pool
+from dotenv import load_dotenv
+import os
+import time
+import logging
+
+logger = logging.getLogger(__name__)
+
+# Load environment variables from .env
+load_dotenv()
+DB_USER = os.getenv("DB_USER")
+DB_PASSWORD = os.getenv("DB_PASSWORD")
+DB_HOST = os.getenv("DB_HOST")
+DB_PORT = os.getenv("DB_PORT")
+DB_NAME = os.getenv("DB_NAME")
+
+
+class DBUtils:
+    _connection_pool = None
+    
+    @classmethod
+    def initialize_pool(cls, minconn=1, maxconn=10, max_retries=3, retry_delay=2):
+        """
+        Initialize connection pool with retry logic.
+        
+        Args:
+            minconn: Minimum number of connections in the pool
+            maxconn: Maximum number of connections in the pool
+            max_retries: Maximum number of connection attempts
+            retry_delay: Delay in seconds between retries
+        """
+        if cls._connection_pool is not None:
+            print("[DBUtils] Connection pool already initialized")
+            return
+        
+        last_error = None
+        for attempt in range(1, max_retries + 1):
+            try:
+                print(f"[DBUtils] Attempting to connect to database (attempt {attempt}/{max_retries})...")
+                
+                dsn = f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+                
+                cls._connection_pool = pool.SimpleConnectionPool(
+                    minconn, maxconn,
+                    dsn=dsn,
+                    # Add connection timeout to fail faster
+                    connect_timeout=10,
+                    # Keepalive settings to prevent stale connections
+                    keepalives=1,
+                    keepalives_idle=30,      # Send keepalive after 30s idle
+                    keepalives_interval=10,  # Retry every 10s
+                    keepalives_count=5       # Give up after 5 failed keepalives
+                )
+                print(f"[DBUtils] Successfully connected to database on attempt {attempt}")
+                return
+            except Exception as e:
+                last_error = e
+                print(f"[DBUtils] Connection attempt {attempt}/{max_retries} failed: {e}")
+                if attempt < max_retries:
+                    print(f"[DBUtils] Retrying in {retry_delay} seconds...")
+                    time.sleep(retry_delay)
+        
+        # If all retries failed, raise the last error
+        raise Exception(f"Failed to initialize database pool after {max_retries} attempts: {last_error}")
+    
+    @classmethod
+    def get_connection(cls):
+        """Get a connection from the pool"""
+        if cls._connection_pool is None:
+            raise Exception("Database connection pool not initialized. Call initialize_pool() first.")
+        return cls._connection_pool.getconn()
+    
+    @classmethod
+    def return_connection(cls, connection):
+        """Return connection back to pool"""
+        if cls._connection_pool is None:
+            raise Exception("Database connection pool not initialized.")
+        cls._connection_pool.putconn(connection)
+    
+    @classmethod
+    def execute_query(cls, query, params=None, max_retries=2) -> list:
+        """Execute query and return results with retry on connection failure"""
+        last_error = None
+        
+        for attempt in range(max_retries):
+            connection = cls.get_connection()
+            try:
+                with connection.cursor() as cursor:
+                    cursor.execute(query, params)
+                    # For SELECT queries
+                    if cursor.description:
+                        return cursor.fetchall()
+                    return []
+            except (psycopg2.DatabaseError, psycopg2.OperationalError) as e:
+                last_error = e
+                logger.warning(f"[DBUtils] Database error on attempt {attempt + 1}/{max_retries}: {e}")
+                # Connection is broken - close it instead of returning to pool
+                try:
+                    cls._connection_pool.putconn(connection, close=True)
+                except Exception:
+                    pass  # Connection may already be closed
+                connection = None
+                
+                if attempt < max_retries - 1:
+                    logger.info("[DBUtils] Retrying with fresh connection...")
+                    continue
+                raise
+            finally:
+                # Only return connection if it wasn't closed due to error
+                if connection is not None:
+                    cls.return_connection(connection)
+        
+        raise last_error
+
+    @classmethod
+    def execute_update(cls, query, params=None, max_retries=2) -> None:
+        """Execute query (INSERT/UPDATE/DELETE) with retry on connection failure"""
+        last_error = None
+        
+        for attempt in range(max_retries):
+            connection = cls.get_connection()
+            try:
+                with connection.cursor() as cursor:
+                    cursor.execute(query, params)
+                    connection.commit()
+                    return
+            except (psycopg2.DatabaseError, psycopg2.OperationalError) as e:
+                if connection:
+                    connection.rollback()
+                last_error = e
+                logger.warning(f"[DBUtils] Database error on attempt {attempt + 1}/{max_retries}: {e}")
+                # Connection is broken - close it instead of returning to pool
+                try:
+                    cls._connection_pool.putconn(connection, close=True)
+                except Exception:
+                    pass  # Connection may already be closed
+                connection = None
+                
+                if attempt < max_retries - 1:
+                    logger.info("[DBUtils] Retrying with fresh connection...")
+                    continue
+                raise
+            finally:
+                # Only return connection if it wasn't closed due to error
+                if connection is not None:
+                    cls.return_connection(connection)
+        
+        raise last_error
+    
+    @classmethod
+    def close_pool(cls):
+        """Close all connections in the pool"""
+        if cls._connection_pool is not None:
+            cls._connection_pool.closeall()
+            cls._connection_pool = None
+            print("[DBUtils] Connection pool closed")
