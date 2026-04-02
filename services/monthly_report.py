@@ -17,13 +17,13 @@ def parse_args():
         "--accounts",
         type=json.loads,
         default=None,
-        help="Dictionary of accounts as a JSON string, e.g. '{\"account_name\": \"account_id\"}'",
+        help="Dictionary of accounts as a JSON string, e.g. '{\"account_name\": \"account_id\"}'. Defaults to all accounts.",
     )
     parser.add_argument(
         "--reference-date",
         type=str,
         default=datetime.date.today(),
-        help="Reference date for the report in YYYY-MM-DD format. Defaults to the previous month.",
+        help="Reference date for the report in YYYY-MM-DD format. Defaults to today that triggers the previous month.",
     )
     return parser.parse_args()
 
