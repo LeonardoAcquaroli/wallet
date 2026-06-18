@@ -1,109 +1,117 @@
 SPESE = {
     "name": "Spese senza investimenti and fees",
     "categories": {
-    "025dcc04-511a-48a7-9d54-9c8330ec7fb3": "Bellezza & Benessere",
-    "0285055c-755c-4008-a5ef-84a8f2e77f0b": "Comunicazione, PC",
-    "03e0aa81-0318-46b0-9b63-91d7420e7ef6": "Pedaggio",
-    "043f8b6a-60de-4ec7-bfb7-4c808f738c66": "Abbigliamento & Scarpe",
-    "06b45615-a7d0-4f00-8992-95d6f9907c55": "Spesa",
-    "0e0ae827-900d-466b-b91c-b5af11f6d5c8": "Drugstore",
-    "11ad0c36-f9cc-4ed7-b82c-601780c46491": "TV & Streaming",
-    "19bff33c-875e-4ce7-bf16-64ff29ebf59c": "Veicoli",
-    "1c796611-0d25-4611-b143-a827f02e309f": "Manutenzione veicoli",
-    "202089f9-0aa1-4959-9dd9-7e905a2a99a6": "Lotterie & Gioco d'azzardo",
-    "22abfec7-d7b9-402b-896a-2242142b75fe": "Internet",
-    "2409b680-1dfb-4926-99c8-652a92dc5a6a": "Culture, sport events",
-    "26426aa6-55ef-43e2-afef-a0285fd5a424": "Fuel",
-    "2979979c-6fa4-44f2-8a45-958749697ad0": "Health & beauty",
-    "32818c0a-5472-4ddf-905c-66ee1f68dee0": "Jewels, accessories",
-    "35794129-8e21-43bb-aba3-e09b53ec53f6": "Altro",
-    "36d3a3a7-6395-49f8-b23f-fa2ddd5edc11": "Trasporti",
-    "37813c1a-6909-4678-9e56-680ee1bdc9ca": "Rentals",
-    "3c7ca941-8ddd-41a4-9fab-59af825f8dff": "Smarrimento",
-    "441f7a25-7962-423e-805c-4c5292036d55": "Telefono",
-    "4befadf2-27f2-42b1-bdba-0a911d7b831b": "Parcheggio",
-    "51a9ed48-13bf-4a60-b9a1-efa78009f4de": "Alcohol, tobacco",
-    "5383eb57-e517-487b-9358-57c1ba2b2e16": "Taxi",
-    "62035cd4-838f-418c-a0d9-98e0931bfbb5": "Manutenzione",
-    "66f877b4-30ca-4920-b78e-14cc36a68e9b": "Holiday, trips, hotels",
-    "68b6ced6-1c86-4534-8c88-704e0de6519e": "Tempo libero",
-    "6d2271c1-ff89-4552-9da3-196626aac7c4": "Casa",
-    "7b1ab11c-bee3-4460-9a65-791b77510014": "Animali domestici",
-    "7c7dfaee-3be0-474e-b337-bd8b4e735940": "Eventi",
-    "835e838a-8ce0-4b9f-8ca3-9e628bc77348": "Services",
+    "5c5c1771-003c-8000-8000-000000000000": "Bellezza & Benessere",
+    "5c5c1b5d-0046-8000-8000-000000000000": "Comunicazione, PC",  # renamed: was 0285055c (PC, Communication)
+    "5c5c1f46-0032-8000-8000-000000000000": "Pedaggio",
+    "5c5c07d0-0014-8000-8000-000000000000": "Abbigliamento & Scarpe",
+    "5c5c03e8-000a-8000-8000-000000000000": "Spesa",
+    "5c5c07db-0014-8000-8000-000000000000": "Drugstore",
+    "5c5c1778-003c-8000-8000-000000000000": "TV & Streaming",
+    "5c5c2329-005a-8000-8000-000000000000": "Veicoli",
+    "5c5c138a-0032-8000-8000-000000000000": "Manutenzione veicoli",
+    "5c5c177c-003c-8000-8000-000000000000": "Lotterie & Gioco d'azzardo",
+    "5c5c1b5a-0046-8000-8000-000000000000": "Internet",
+    "5c5c1773-003c-8000-8000-000000000000": "Culture, sport events",
+    "5c5c1388-0032-8000-8000-000000000000": "Fuel",
+    "5c5c07d2-0014-8000-8000-000000000000": "Health & beauty",
+    "5c5c07d1-0014-8000-8000-000000000000": "Jewels, accessories",
+    "5c5c2af8-006e-8000-8000-000000000000": "Altro",  # renamed: was 35794129 (Others)
+    "5c5c0fa4-0028-8000-8000-000000000000": "Trasporti",  # renamed: was 36d3a3a7 (Transportation)
+    "5c5c138b-0032-8000-8000-000000000000": "Rentals",
+    "5c5c2af9-006e-8000-8000-000000000000": "Smarrimento",
+    "5c5c1b59-0046-8000-8000-000000000000": "Telefono",
+    "5c5c1389-0032-8000-8000-000000000000": "Parcheggio",
+    "5c5c177b-003c-8000-8000-000000000000": "Alcohol, tobacco",
+    "5c5c0fa1-0028-8000-8000-000000000000": "Taxi",
+    "5c5c0bbc-001e-8000-8000-000000000000": "Manutenzione",
+    "5c5c1779-003c-8000-8000-000000000000": "Holiday, trips, hotels",
+    "5c5c07d9-0014-8000-8000-000000000000": "Tempo libero",
+    "5c5c0bbd-001e-8000-8000-000000000000": "Casa",  # renamed: was 6d2271c1 (Housing)
+    "5c5c07d5-0014-8000-8000-000000000000": "Animali domestici",
+    "5c5c1774-003c-8000-8000-000000000000": "Eventi",  # renamed: was 7c7dfaee (Life events)
+    "5c5c0bbb-001e-8000-8000-000000000000": "Services",
     "892593d3-451c-45e5-8518-9c233abd38db": "Premi",
-    "8a55709c-b88b-443f-9395-be0e0579edfa": "Home, garden",
-    "8b6a6c2a-f08a-44f5-bc12-60c8ccd268df": "Interest, dividends",
-    "8f78088b-8d9e-4c76-92b4-9748eff28b9f": "Fines",
-    "926cc8c8-3482-4630-9032-83c6c348fa1a": "Sconosciuto",
-    "94ec9c3f-391d-4395-bb93-f2e1924d3e64": "Sport & Fitness",
-    "9896e24f-9875-4b94-8dc6-f968c3b5e84c": "Rete telefonica fissa",
-    "9af92dfc-1dfa-4d83-80b3-ad2447970be2": "Assicurazione immobili",
-    "9defe17c-1cd4-4460-8ece-96fd90a76690": "Bar & Locali",
-    "a0e0eaa6-9f83-43fd-afd7-59e20d0381ae": "Shopping",
-    "a45fe304-d61c-486e-98b8-7e2f90e0c8ae": "Life & Entertainment",
-    "ae0f2975-9b72-4cbb-a810-a1092d7e673e": "Long distance",
-    "b00d0301-b0de-4a08-b3c9-d6a3c68dda02": "Formazione & Sviluppo",
-    "b480c589-a9bd-4d61-bf3f-0551faff8838": "Vehicle insurance",
-    "bbd7c12b-8482-4154-83ec-66ae33d1ad9e": "Trasporto pubblico",
-    "bde7d02a-5ef8-4702-9883-4ab23aace98f": "Postal services",
-    "c2d55850-4582-421b-accf-c5db2d8e3d57": "Rent",
-    "c8d2dda6-ca86-4ee4-adeb-9c531f4e4d93": "Business trips",
-    "caa676db-ae3d-4456-8563-21c3506d309c": "Cancelleria & Utensili",
-    "cb9d72f3-2b31-4dfe-ab4a-feafe8bdf3de": "Salute",
-    "cd302b21-35ff-407a-ad29-965f33dbab09": "Software, apps, games",
-    "d69edfb5-81ef-42b5-8908-49db1a17e9a6": "Regali",
-    "da124eef-0630-48ca-9af6-67c36b96740c": "Cibo & Bevande",
+    "5c5c07d4-0014-8000-8000-000000000000": "Home, garden",
+    "5c5c1f43-0050-8000-8000-000000000000": "Fines",
+    "5c5c32c9-0082-8000-8000-000000000000": "Sconosciuto",
+    "5c5c1772-003c-8000-8000-000000000000": "Sport & Fitness",
+    "5c5c0bb9-001e-8000-8000-000000000000": "Rete telefonica fissa",
+    "5c5c0bc2-001e-8000-8000-000000000000": "Assicurazione immobili",
+    "5c5c03ea-000a-8000-8000-000000000000": "Bar & Locali",
+    "5c5c07da-0014-8000-8000-000000000000": "Shopping",  # renamed: was a0e0eaa6
+    "5c5c177d-003c-8000-8000-000000000000": "Life & Entertainment",  # renamed: was a45fe304
+    "5c5c0fa2-0028-8000-8000-000000000000": "Long distance",
+    "5c5c1776-003c-8000-8000-000000000000": "Formazione & Sviluppo",
+    "5c5c1392-0032-8000-8000-000000000000": "Vehicle insurance",
+    "5c5c0fa0-0028-8000-8000-000000000000": "Trasporto pubblico",
+    "5c5c1b5c-0046-8000-8000-000000000000": "Postal services",
+    "5c5c0bb8-001e-8000-8000-000000000000": "Rent",
+    "5c5c0fa3-0028-8000-8000-000000000000": "Business trips",
+    "5c5c07d8-0014-8000-8000-000000000000": "Cancelleria & Utensili",
+    "5c5c1770-003c-8000-8000-000000000000": "Salute",
+    "5c5c1b5b-0046-8000-8000-000000000000": "Software, apps, games",
+    "5c5c07d7-0014-8000-8000-000000000000": "Regali",  # renamed: was d69edfb5 (Gifts & joy)
+    "5c5c03eb-000a-8000-8000-000000000000": "Cibo & Bevande",  # renamed: was da124eef (Food & Drinks)
     "da3fcf77-52a4-41ca-bba3-bd06493ba159": "Leti",
-    "dc9a2f8e-c233-4027-a612-4913a406ff3f": "Energia & Utenze",
-    "e3504ae6-2463-4c18-94e3-7b556f39d534": "Unknown Expense",
-    "e67d57f4-5a62-4f0b-a465-86e001c62e63": "Charity, gifts",
-    "f42ffe7e-7710-491c-abf3-fc7b92cef42a": "Hobbies",
-    "fb90fae9-b395-4e48-9574-aff68dd2d560": "Books, audio, subscriptions",
-    "fe2cd110-9275-4f28-92f0-ecb3bfb1663e": "Ristoranti & Fast-food",
+    "5c5c0bba-001e-8000-8000-000000000000": "Energia & Utenze",
+    "5c5c177a-003c-8000-8000-000000000000": "Charity, gifts",
+    "5c5c1775-003c-8000-8000-000000000000": "Hobbies",
+    "5c5c1777-003c-8000-8000-000000000000": "Books, audio, subscriptions",
+    "5c5c03e9-000a-8000-8000-000000000000": "Ristoranti & Fast-food",
+    # newly mapped categories
+    "5c5c1f44-0050-8000-8000-000000000000": "Advisory",
+    "5c5c1f41-0050-8000-8000-000000000000": "Insurances",
+    "5c5c07dc-0014-8000-8000-000000000000": "Department Stores",
+    "5c5c07d6-0014-8000-8000-000000000000": "Electronics & accessories",
+    "5c5c07d3-0014-8000-8000-000000000000": "Kids",
+    "5c5c138c-0032-8000-8000-000000000000": "Vehicle",
     }
 }
 
 INCOME = {
     "name": "Income and Bonus",
     "categories": {
-        "a2cb741c-753d-40e6-bcf4-cc4acc7b36d5": "Regali",
-        "91a849fe-db27-4455-beaf-15e9ddf2deb9": "Bonus",
+        "5c5c271a-0064-8000-8000-000000000000": "Regali",
+        "5c5c2719-0064-8000-8000-000000000000": "Bonus",
         "892593d3-451c-45e5-8518-9c233abd38db": "Premi",
-        "979f1b8b-5412-40d9-9e06-a869f5f27ef5": "Lotterie & Gioco d'azzardo",
-        "58e7b0c4-56ac-4fe5-bf29-b94454688ab9": "Paghetta",
-        "93117202-313b-4c3d-8cb7-45e284024516": "Rimborsi calcio",
-        "61afe20f-fe65-4efa-aefb-4b41eb10a92e": "Ripetizioni",
-        "9d2eb0c2-f0a3-48ac-b9ab-ed11d95e3b3d": "Vendite",
-        "c232f841-d12b-491a-b659-8e8e747a0454": "Stipendio",
-         "93d63206-47e9-457f-a59e-d54b44478225": "Unknown Income",
-        # "": "Reddito" is it Unknown Income?
-        # "": "Proventi da prestiti"
+        "5c5c2717-0064-8000-8000-000000000000": "Lotterie & Gioco d'azzardo",
+        "5c5c2716-0064-8000-8000-000000000000": "Paghetta",
+        "5c5c2714-0064-8000-8000-000000000000": "Rimborsi calcio",
+        "5c5c2713-0064-8000-8000-000000000000": "Ripetizioni",
+        "5c5c2712-0064-8000-8000-000000000000": "Vendite",
+        "5c5c2710-0064-8000-8000-000000000000": "Stipendio",
+        "5c5c32c8-0082-8000-8000-000000000000": "Unknown Income",
+        # newly mapped categories
+        "5c5c271b-0064-8000-8000-000000000000": "Income",
+        "5c5c2715-0064-8000-8000-000000000000": "Lending, renting",
     }
 }
 
 RIMBORSI = {
     "name": "Rimborsi",
     "categories": {
-        "c196e895-83d8-4118-b744-94321501287e": "Rimborsi"
+        "5c5c2718-0064-8000-8000-000000000000": "Rimborsi",
+        # newly mapped categories
+        "5c5c1f47-0050-8000-8000-000000000000": "Refund",
     }
 }
 
 INVESTIMENTI = {
     "name": "Investimenti Tasse e Commissioni",
     "categories": {
-        "b3cf77b0-3dfb-4182-a82e-43d307287baa": "Spese finanziarie",
-        "4a2f0581-b7b2-49ea-8660-095b5d87491d": "Commissioni",
-        "718c18df-f85d-488f-be11-0e44bebc526b": "Prestiti & Interessi",
-        "3179b457-1ad6-4b0a-ae54-005ac04f6055": "Taxes",
-        "d922ce7f-9379-4078-811a-3b5b502f0e58": "Investments",
+        "5c5c1f48-0050-8000-8000-000000000000": "Spese finanziarie",  # renamed: was b3cf77b0 (Financial expenses)
+        "5c5c1f45-0050-8000-8000-000000000000": "Commissioni",
+        "5c5c1f42-0050-8000-8000-000000000000": "Prestiti & Interessi",
+        "5c5c1f40-0050-8000-8000-000000000000": "Taxes",
+        "5c5c232d-005a-8000-8000-000000000000": "Investments",  # renamed: was d922ce7f
         "7af26741-a212-47da-a50c-baeb717e9db4": "Interessi",
-        "d3cffaf0-b543-4550-b3c8-1780fdfbf76f": "Interests and Dividends",
-        "c1c19810-a76b-448c-be98-807361998bc4": "Realty",
-        "1fe10154-42a3-42b4-8ec1-b88980ce0346": "Risparmi",
-        "43602ea1-d211-4ec2-99d4-76cc838030a1": "Financial investments",
+        "5c5c232c-005a-8000-8000-000000000000": "Interests and Dividends",
+        "5c5c2328-005a-8000-8000-000000000000": "Realty",
+        "5c5c232b-005a-8000-8000-000000000000": "Risparmi",
+        "5c5c232a-005a-8000-8000-000000000000": "Financial investments",
         "a04096d4-7436-47dd-b6a0-5f545e7eff20": "Dividends",
-        "8b6a6c2a-f08a-44f5-bc12-60c8ccd268df": "Interest, dividends" # Income category
+        "5c5c2711-0064-8000-8000-000000000000": "Interest, dividends",  # income category
     }
 }
 

@@ -140,15 +140,16 @@ def get_records(accounts: dict, reference_date_str: str):
 
     for account_name, account_id in accounts.items():
         while True:    
-            n_records_retrieved = i * 100
+            n_records_retrieved = i * 200
 
             args = {
                     "accountId": account_id,
-                    "recordDate": f"lte.{last_day_of_prev_month}",
-                    "limit": 100,
+                    "recordDate": [f"gte.{first_day_of_prev_month}", f"lte.{last_day_of_prev_month}"],
+                    "limit": 200,
                     "offset": n_records_retrieved
                 }
             time.sleep(1)
+            print(f"Fetching records for account {account_name} with offset {n_records_retrieved}")
             records = call_wallet_api("v1/api/records", args=args)
 
             if len(records['records']) > 0:
@@ -176,6 +177,5 @@ def get_records(accounts: dict, reference_date_str: str):
             else:
                 i = 0
                 break
-    
-    records_df = records_df[records_df['date'] >= first_day_of_prev_month]
+
     return records_df

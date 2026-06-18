@@ -34,8 +34,16 @@ def monthly_report(accounts=None, reference_date_str=None):
         reference_date_str = str(args.reference_date)
 
     if not accounts:
-        accounts_response = call_wallet_api("v1/api/accounts")
-        accounts = {account["name"]: account["id"] for account in accounts_response["accounts"]}
+        # /accounts defaults to a page size of 10 -> paginate or accounts get silently dropped
+        accounts = {}
+        offset = 0
+        while True:
+            page = call_wallet_api("v1/api/accounts", args={"limit": 100, "offset": offset})["accounts"]
+            if not page:
+                break
+            for account in page:
+                accounts[account["name"]] = account["id"]
+            offset += 100
 
     monthly_records = get_records(accounts, reference_date_str=reference_date_str)
     report = make_report(monthly_records)
